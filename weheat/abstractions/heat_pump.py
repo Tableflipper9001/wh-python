@@ -412,7 +412,7 @@ class HeatPump:
 
     @property
     def energy_total(self) -> Union[float, None]:
-        """The total used energy in kWh."""
+        """The total used (electrical) energy in kWh."""
         if self._energy_total is None:
             return None
         return float(
@@ -423,9 +423,10 @@ class HeatPump:
 
     @property
     def energy_output(self) -> Union[float, None]:
-        """The total energy output in kWh now."""
+        """The total useful generated energy for the house in kWh."""
         if self._energy_total is None:
             return None
-        return float(self._energy_total.total_e_out_heating + self._energy_total.total_e_out_dhw + (
-            -self._energy_total.total_e_out_heating_defrost) + (-self._energy_total.total_e_out_dhw_defrost) + (
-                         -self._energy_total.total_e_out_cooling))
+        return float(
+            self._energy_total.total_e_out_heating + self._energy_total.total_e_out_dhw +
+            self._energy_total.total_e_out_heating_defrost + self._energy_total.total_e_out_dhw_defrost +
+            (-self._energy_total.total_e_out_cooling))
